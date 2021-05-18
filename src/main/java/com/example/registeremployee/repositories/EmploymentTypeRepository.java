@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface EmploymentTypeRepository extends MongoRepository<EmploymentType, Long> {
 
     EmploymentType findByName(String name);
+    void deleteByName(String name);
 }

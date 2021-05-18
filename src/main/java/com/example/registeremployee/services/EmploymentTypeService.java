@@ -28,9 +28,9 @@ public class EmploymentTypeService {
             return "Den anställningstyp finns redan";
     }
 
-    public String deleteType(Long id){
-        repository.deleteById(id);
-        return "Du har raderat anställningstyp med id " + id;
+    public String deleteType(String name){
+        repository.deleteByName(name);
+        return "Du har raderat anställningstyp " + name;
     }
 
 }

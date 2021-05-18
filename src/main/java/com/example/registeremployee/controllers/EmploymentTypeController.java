@@ -26,8 +26,8 @@ public class EmploymentTypeController {
     }
 
     @GetMapping("/delete")
-    public String deleteType(@RequestParam Long id){
-        return service.deleteType(id);
+    public String deleteType(@RequestParam String name){
+        return service.deleteType(name);
     }
 
 }
