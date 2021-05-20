@@ -23,6 +23,15 @@ public class EmployeeService {
     }
 
     public String addEmployee(Employee employee) {
+        Optional<EmploymentType> type = typeRepository.findByName(employee.getEmploymentType().getName());
+        if (type.isEmpty()){
+            typeRepository.save(new EmploymentType(employee.getEmploymentType().getName()));
+           employee.setEmploymentType(typeRepository.findByName(employee.getEmploymentType().getName()).orElseThrow());
+        }
+        else {
+            employee.setEmploymentType(type.orElseThrow());
+        }
+
         Optional<Employee> temp = repository.findBySocialSecurityNr(employee.getSocialSecurityNr());
         if(temp.isEmpty()){
             repository.save(employee);
@@ -68,12 +77,12 @@ public class EmployeeService {
 
     private EmploymentType whichType(Employee employee) {
 
-        EmploymentType informationType = typeRepository.findByName(employee.getEmploymentType().getName());
-        if (informationType == null) {
+        Optional<EmploymentType> informationType = typeRepository.findByName(employee.getEmploymentType().getName());
+        if (informationType.isEmpty()) {
             return new EmploymentType(employee.getEmploymentType().getName());
         }
         else {
-            return informationType;
+            return informationType.orElseThrow();
         }
            }
 

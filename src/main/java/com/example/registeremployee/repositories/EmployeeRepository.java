@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface EmployeeRepository extends MongoRepository<Employee, Long> {
+public interface EmployeeRepository extends MongoRepository<Employee, String> {
 
     Optional<Employee> findBySocialSecurityNr(String socialSecurityNr);
     List<Employee> findEmployeeByFirstNameAndLastName(String firstName, String lastName);

@@ -16,7 +16,7 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
     private String firstName;
     private String lastName;
@@ -27,7 +27,7 @@ public class Employee {
 
     private double salary;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     private EmploymentType employmentType;
     //private String department;
