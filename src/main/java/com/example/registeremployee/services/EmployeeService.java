@@ -76,13 +76,14 @@ public class EmployeeService {
     }
 
     private EmploymentType whichType(Employee employee) {
+        Optional<EmploymentType> type = typeRepository.findByName(employee.getEmploymentType().getName());
+        if (type.isEmpty()){
+            typeRepository.save(new EmploymentType(employee.getEmploymentType().getName()));
+            return typeRepository.findByName(employee.getEmploymentType().getName()).orElseThrow();
 
-        Optional<EmploymentType> informationType = typeRepository.findByName(employee.getEmploymentType().getName());
-        if (informationType.isEmpty()) {
-            return new EmploymentType(employee.getEmploymentType().getName());
         }
         else {
-            return informationType.orElseThrow();
+            return type.orElseThrow();
         }
            }
 
