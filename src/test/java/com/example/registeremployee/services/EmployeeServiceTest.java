@@ -15,8 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,24 +35,19 @@ class EmployeeServiceTest {
         employeeService = new EmployeeService(mockEmployeeRepository, mockTypeRepository);
     }
 
-    @Test
-    void findEmployee() {
-        Employee expected = new Employee("Sara", "Carlsson", "Female",
-                "830208XXXX", 35000);
-        expected.setEmploymentType(new EmploymentType("Undersköterska"));
-
-        when(mockEmployeeRepository.findEmployeeByFirstNameAndLastName(anyString(), anyString()))
-                .thenReturn(Collections.singletonList(expected));
-
-        List<Employee> actual = employeeService.findEmployee(anyString(), anyString());
-
-        assertEquals(actual.get(0), expected);
-        verify(mockEmployeeRepository).findEmployeeByFirstNameAndLastName(anyString(), anyString());
-
-    }
     
     @Test
     void updateEmployee(){
+        System.out.println("i test");
+        Employee expectedBefore = new Employee("Sara", "Carlsson", "Female",
+                "830208XXXX", 35000);
+        Employee expectedAfter = new Employee("Sara", "Carlsson", "Female",
+                "830208XXXX", 45000);
 
+        when(mockEmployeeRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expectedBefore));
+
+        Employee actual = employeeService.updateEmployee(expectedAfter);
+
+        assertEquals(expectedBefore, actual);
     }
 }

@@ -65,16 +65,16 @@ public class  EmployeeService {
     }
 
     public Employee updateEmployee (Employee employee) {
+        System.out.println("i service");
         repository.findBySocialSecurityNr(employee.getSocialSecurityNr())
-                .ifPresentOrElse((user) -> {
+                .ifPresent((user) -> {
                     user.setFirstName(employee.getFirstName())
                             .setLastName(employee.getLastName())
                             .setGender(employee.getGender())
                             .setSalary(employee.getSalary())
                             .setEmploymentType(whichType(employee));
                     repository.save(user);
-                }, 
-                        () -> {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Den antällda finns inte.");});
+                });
         return repository.findBySocialSecurityNr(employee.getSocialSecurityNr())
                 .orElseThrow();
     }
@@ -84,13 +84,9 @@ public class  EmployeeService {
         if (type.isEmpty()){
             typeRepository.save(new EmploymentType(employee.getEmploymentType().getName()));
             return typeRepository.findByName(employee.getEmploymentType().getName()).orElseThrow();
-
         }
         else {
             return type.orElseThrow();
         }
            }
-
-
-
 }
