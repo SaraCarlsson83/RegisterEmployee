@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -19,8 +20,8 @@ public class EmploymentTypeService {
     }
 
     public String addType(EmploymentType employmentType) {
-        EmploymentType temp = repository.findByName(employmentType.getName());
-        if(temp==null){
+        Optional<EmploymentType> temp = repository.findByName(employmentType.getName());
+        if(temp.isEmpty()){
             repository.save(employmentType);
             return employmentType.getName() +  " är sparad.";
         }
@@ -28,9 +29,9 @@ public class EmploymentTypeService {
             return "Den anställningstyp finns redan";
     }
 
-    public String deleteType(Long id){
-        repository.deleteById(id);
-        return "Du har raderat anställningstyp med id " + id;
+    public String deleteType(String name){
+        repository.deleteByName(name);
+        return "Du har raderat anställningstyp " + name;
     }
 
 }
