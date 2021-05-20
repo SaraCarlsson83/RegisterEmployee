@@ -4,8 +4,11 @@ import com.example.registeremployee.models.Employee;
 import com.example.registeremployee.models.EmploymentType;
 import com.example.registeremployee.repositories.EmployeeRepository;
 import com.example.registeremployee.repositories.EmploymentTypeRepository;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class EmployeeService {
+public class  EmployeeService {
 
     private final EmployeeRepository repository;
     private final EmploymentTypeRepository typeRepository;
@@ -63,14 +66,15 @@ public class EmployeeService {
 
     public Employee updateEmployee (Employee employee) {
         repository.findBySocialSecurityNr(employee.getSocialSecurityNr())
-                .ifPresent(user -> {
+                .ifPresentOrElse((user) -> {
                     user.setFirstName(employee.getFirstName())
                             .setLastName(employee.getLastName())
                             .setGender(employee.getGender())
                             .setSalary(employee.getSalary())
                             .setEmploymentType(whichType(employee));
                     repository.save(user);
-                } );
+                }, 
+                        () -> {throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Den antällda finns inte.");});
         return repository.findBySocialSecurityNr(employee.getSocialSecurityNr())
                 .orElseThrow();
     }
