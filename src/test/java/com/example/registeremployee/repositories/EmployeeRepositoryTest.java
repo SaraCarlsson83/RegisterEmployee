@@ -18,15 +18,19 @@ class EmployeeRepositoryTest {
     EmployeeRepository employeeRepository;
 
     @Test
-    void findEmployeeByFirstNameAndLastName() {
-        Employee expected = new Employee("Sara", "Carlsson", "Female",
+    void deleteBySocialSecurityNr() {
+        Employee expectedBeforeDelete = new Employee("Sara", "Carlsson", "Female",
                 "830208XXXX", 35000);
-        expected.setEmploymentType(new EmploymentType("Undersköterska"));
+        expectedBeforeDelete.setEmploymentType(new EmploymentType("Undersköterska"));
+        employeeRepository.save(expectedBeforeDelete);
 
-        employeeRepository.save(expected);
+        employeeRepository.deleteBySocialSecurityNr("830208XXXX");
 
-        List<Employee> actual = employeeRepository.findEmployeeByFirstNameAndLastName("Sara", "Carlsson");
+        Optional<Employee> actual = employeeRepository.findBySocialSecurityNr("830208XXXX");
 
-        assertEquals(actual.get(0), expected);
+        assertTrue(actual.isEmpty());
+
     }
+
+
 }
