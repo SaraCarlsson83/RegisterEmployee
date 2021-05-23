@@ -23,7 +23,7 @@ class EmploymentTypeRepositoryTest {
 
         Optional<EmploymentType> actual = repository.findByName("Sjuksköterska");
 
-        assertEquals(expected,actual.orElseThrow());
+        assertEquals(expected, actual.orElseThrow());
 
 
     }
