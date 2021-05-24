@@ -7,15 +7,19 @@ import com.example.registeremployee.repositories.EmploymentTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -27,6 +31,9 @@ class EmployeeServiceTest {
 
     @Mock
     EmploymentTypeRepository mockTypeRepository;
+
+    @InjectMocks
+    EmployeeService mockservice;
 
     @BeforeEach
     public void init() {
@@ -58,4 +65,50 @@ class EmployeeServiceTest {
         verify(mockRepository).findAll();
 
     }
+
+    @Test
+    void addEmployee_successful() {
+        Employee mockEmployee = new Employee();
+        mockEmployee.setFirstName("Ivona");
+        mockEmployee.setLastName("Zoricic");
+        mockEmployee.setGender("Man");
+        mockEmployee.setSocialSecurityNr("1602298513");
+        mockEmployee.setSalary(35000);
+        mockEmployee.setEmploymentType(new EmploymentType("Utvecklare"));
+
+
+
+//        when(mockRepository.save(any())).thenReturn(mockEmployee);
+        when(mockRepository.save(any())).thenReturn(mockEmployee);
+//        when(mockservice.addEmployee(any())).thenReturn(mockEmployee.getFirstName() +  " " +  mockEmployee.getLastName() + " är sparad.");
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(Optional.of(mockEmployee));
+        when(mockTypeRepository.findByName(anyString())).thenReturn(Optional.of(mockEmployee.getEmploymentType()));
+
+        String actual = service.addEmployee(mockEmployee);
+        String expected = "Ivona Zoricic är sparad.";
+
+       assertEquals(expected, actual);
+
+        verify(mockRepository, times(1)).save(mockEmployee);
+//        verify(mockTypeRepository, times(1)).findByName(mockEmployee.getEmploymentType().getName());
+
+
+    }
+
+
+    @Test
+    void deleteEmployee() {
+        Employee employee = new Employee();
+        employee.setFirstName("Ivona");
+        employee.setLastName("Zoricic");
+        employee.setGender("Kvinna");
+        employee.setSocialSecurityNr("123456789");
+        employee.setSalary(35000);
+        employee.setEmploymentType(new EmploymentType("Utvecklare"));
+
+        service.deleteEmployee(employee.getSocialSecurityNr());
+
+        verify(mockRepository, times(1)).deleteBySocialSecurityNr(employee.getSocialSecurityNr());
+    }
+
 }

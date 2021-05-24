@@ -14,21 +14,16 @@ import javax.persistence.*;
 @Accessors(chain = true)
 public class Employee {
 
-    @Id
-    @GeneratedValue
     private String id;
 
     private String firstName;
     private String lastName;
     private String gender;
 
-    @Column(unique = true)
     private String socialSecurityNr;
 
     private double salary;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id")
     private EmploymentType employmentType;
     //private String department;
 }
