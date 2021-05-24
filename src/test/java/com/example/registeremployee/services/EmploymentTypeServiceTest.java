@@ -25,13 +25,16 @@ class EmploymentTypeServiceTest {
     //EmploymentTypeService service;
 
     @Test
+    void deleteType() {
+        EmploymentType expected = new EmploymentType("Undersköterska");
+        //expected.setName("Undersköterska");
+        typeRepository.save(expected);
 
-        void addType() {
-            EmploymentType type = new EmploymentType("type1");
-            typeRepository.save(type).toString();
-            EmploymentType actual= typeRepository.findAll().get(0);
+        EmploymentType actual =typeRepository.deleteByName("Undersköterska");
+        assertEquals(actual,expected);
 
-            assertEquals(actual,type);
+        //Optional<EmploymentType> actual = typeRepository.deleteByName("");
 
-        }
+        // assertTrue(actual.isEmpty());
+    }
     }
