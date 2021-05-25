@@ -78,7 +78,7 @@ class EmployeeServiceTest {
         when(mockRepository.findEmployeeByFirstNameAndLastName(anyString(), anyString()))
                 .thenReturn(Collections.singletonList(expected));
 
-        List<Employee> actual = employeeService.findEmployee(anyString(), anyString());
+        List<Employee> actual = service.findEmployee(anyString(), anyString());
 
         assertEquals(actual.get(0), expected);
         verify(mockRepository).findEmployeeByFirstNameAndLastName(anyString(), anyString());
