@@ -82,14 +82,14 @@ class EmployeeServiceTest {
         EmploymentType expectedType = new EmploymentType("Sjuksköterska");
         expected.setEmploymentType(expectedType);
     
-    when(mockEmployeeRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+    when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
         when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
 
         Employee actual = employeeService.updateEmployee(expected);
 
         assertEquals(expected, actual);
     
-     verify(mockEmployeeRepository, times(2)).findBySocialSecurityNr(anyString());
+     verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
         verify(mockTypeRepository).findByName(anyString());
   }
 
