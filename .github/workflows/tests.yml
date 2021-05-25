@@ -1,4 +1,4 @@
-name: Test CI Register
+name: Test CI Register employee
 
 on:
   workflow_dispatch:
