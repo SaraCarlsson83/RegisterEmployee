@@ -10,10 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
@@ -38,16 +34,19 @@ class EmployeeServiceTest {
     
     @Test
     void updateEmployee(){
-        System.out.println("i test");
-        Employee expectedBefore = new Employee("Sara", "Carlsson", "Female",
+        Employee expected = new Employee("Sara", "Carlsson", "Female",
                 "830208XXXX", 35000);
-        Employee expectedAfter = new Employee("Sara", "Carlsson", "Female",
-                "830208XXXX", 45000);
+        EmploymentType expectedType = new EmploymentType("Sjuksköterska");
+        expected.setEmploymentType(expectedType);
 
-        when(mockEmployeeRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expectedBefore));
+        when(mockEmployeeRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+        when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
 
-        Employee actual = employeeService.updateEmployee(expectedAfter);
+        Employee actual = employeeService.updateEmployee(expected);
 
-        assertEquals(expectedBefore, actual);
+        assertEquals(expected, actual);
+
+        verify(mockEmployeeRepository.findBySocialSecurityNr(anyString()));
+        verify(mockTypeRepository.findByName(anyString()));
     }
 }
