@@ -12,8 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -46,7 +45,7 @@ class EmployeeServiceTest {
 
         assertEquals(expected, actual);
 
-        verify(mockEmployeeRepository.findBySocialSecurityNr(anyString()));
-        verify(mockTypeRepository.findByName(anyString()));
+        verify(mockEmployeeRepository, times(2)).findBySocialSecurityNr(anyString());
+        verify(mockTypeRepository).findByName(anyString());
     }
 }
