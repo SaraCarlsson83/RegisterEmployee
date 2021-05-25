@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 
 @Data
 @AllArgsConstructor
@@ -18,7 +19,6 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String gender;
-
 
     private String socialSecurityNr;
 

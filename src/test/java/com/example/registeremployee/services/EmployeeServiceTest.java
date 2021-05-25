@@ -10,6 +10,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
 import java.util.Arrays;
 
 import java.util.List;
@@ -25,6 +29,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -44,6 +49,7 @@ class EmployeeServiceTest {
         service = new EmployeeService(mockRepository, mockTypeRepository);
     }
 
+    
     @Test
     void findAll() {
         Employee mockEmployee = new Employee();
@@ -68,13 +74,34 @@ class EmployeeServiceTest {
 
         verify(mockRepository).findAll();
         }
+  
+  @Test
+  void updateEmployee(){
+    Employee expected = new Employee("Sara", "Carlsson", "Female",
+                "830208XXXX", 35000);
+        EmploymentType expectedType = new EmploymentType("Sjuksköterska");
+        expected.setEmploymentType(expectedType);
+    
+    when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+        when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
+
+        Employee actual = service.updateEmployee(expected);
+
+        assertEquals(expected, actual);
+    
+     verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
+        verify(mockTypeRepository).findByName(anyString());
+  }
 
     @Test
     void findEmployee() {
+
         Employee expected = new Employee("Sara", "Carlsson", "Female",
                 "830208XXXX", 35000);
-        expected.setEmploymentType(new EmploymentType("Undersköterska"));
+        EmploymentType expectedType = new EmploymentType("Sjuksköterska");
+        expected.setEmploymentType(expectedType);
 
+        
         when(mockRepository.findEmployeeByFirstNameAndLastName(anyString(), anyString()))
                 .thenReturn(Collections.singletonList(expected));
 
@@ -83,6 +110,5 @@ class EmployeeServiceTest {
         assertEquals(actual.get(0), expected);
         verify(mockRepository).findEmployeeByFirstNameAndLastName(anyString(), anyString());
 
-
-    }
+  }
 }
