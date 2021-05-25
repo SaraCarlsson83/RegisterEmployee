@@ -29,4 +29,19 @@ class EmploymentTypeRepositoryTest {
         assertTrue(actual.isEmpty());
 
     }
+
+    @Test
+    void findByName() {
+        String name = "Sjuksköterska";
+        EmploymentType expected  = new EmploymentType("Sjuksköterska");
+        repository.save(expected);
+
+        Optional<EmploymentType> actual = repository.findByName("Sjuksköterska");
+
+        assertEquals(expected, actual.orElseThrow());
+
+
+    }
 }
+
+
