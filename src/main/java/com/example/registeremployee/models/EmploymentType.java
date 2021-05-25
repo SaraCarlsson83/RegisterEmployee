@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmploymentType {
 
- 
+
     private String id;
 
     private String name;

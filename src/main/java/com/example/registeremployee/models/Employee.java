@@ -13,7 +13,6 @@ import org.springframework.data.annotation.Id;
 @Accessors(chain = true)
 public class Employee {
 
-
     private String id;
 
     private String firstName;

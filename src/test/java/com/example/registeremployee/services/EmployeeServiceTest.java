@@ -7,7 +7,9 @@ import com.example.registeremployee.repositories.EmploymentTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
@@ -22,13 +24,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 
 
 @ExtendWith(MockitoExtension.class)
@@ -43,6 +52,9 @@ class EmployeeServiceTest {
 
     @Mock
     EmploymentTypeRepository mockTypeRepository;
+
+    @InjectMocks
+    EmployeeService mockservice;
 
     @BeforeEach
     public void init() {
@@ -84,14 +96,32 @@ class EmployeeServiceTest {
     
     when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
         when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
-
-        Employee actual = service.updateEmployee(expected);
+    
+     Employee actual = service.updateEmployee(expected);
 
         assertEquals(expected, actual);
     
      verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
         verify(mockTypeRepository).findByName(anyString());
   }
+
+    
+    @Test
+    void deleteEmployee() {
+        Employee employee = new Employee();
+        employee.setFirstName("Ivona");
+        employee.setLastName("Zoricic");
+        employee.setGender("Kvinna");
+        employee.setSocialSecurityNr("123456789");
+        employee.setSalary(35000);
+        employee.setEmploymentType(new EmploymentType("Utvecklare"));
+
+        service.deleteEmployee(employee.getSocialSecurityNr());
+
+        verify(mockRepository, times(1)).deleteBySocialSecurityNr(employee.getSocialSecurityNr());
+    }
+
+       
 
     @Test
     void findEmployee() {
@@ -112,3 +142,4 @@ class EmployeeServiceTest {
 
   }
 }
+
