@@ -16,6 +16,21 @@ class EmploymentTypeRepositoryTest {
     EmploymentTypeRepository repository;
 
     @Test
+    void deleteByName() {
+        String name = "Läkare";
+        EmploymentType expected = new EmploymentType("Läkare");
+
+        repository.save(expected);
+        repository.deleteByName("Läkare");
+
+
+        Optional<EmploymentType> actual = repository.findByName("Läkare");
+
+        assertTrue(actual.isEmpty());
+
+    }
+
+    @Test
     void findByName() {
         String name = "Sjuksköterska";
         EmploymentType expected  = new EmploymentType("Sjuksköterska");
@@ -28,4 +43,5 @@ class EmploymentTypeRepositoryTest {
 
     }
 }
+
 

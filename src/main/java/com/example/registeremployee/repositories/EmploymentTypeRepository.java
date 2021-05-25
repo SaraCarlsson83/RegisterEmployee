@@ -7,7 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface EmploymentTypeRepository extends MongoRepository<EmploymentType, String> {
+public interface
+EmploymentTypeRepository extends MongoRepository<EmploymentType, String> {
 
     Optional<EmploymentType> findByName(String name);
     EmploymentType deleteByName(String name);
