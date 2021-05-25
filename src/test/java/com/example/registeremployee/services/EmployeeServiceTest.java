@@ -85,7 +85,7 @@ class EmployeeServiceTest {
     when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
         when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
 
-        Employee actual = employeeService.updateEmployee(expected);
+        Employee actual = service.updateEmployee(expected);
 
         assertEquals(expected, actual);
     
