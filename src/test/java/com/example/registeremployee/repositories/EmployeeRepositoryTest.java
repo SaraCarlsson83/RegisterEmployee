@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
+import java.util.List;
+
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeRepositoryTest {
 
     @Autowired
+
     EmployeeRepository repository;
 
     @Test
@@ -40,4 +43,22 @@ class EmployeeRepositoryTest {
         assertEquals(expected, actual.orElseThrow());
 
     }
+
+    @Test
+    void deleteBySocialSecurityNr() {
+        Employee expectedBeforeDelete = new Employee("Sara", "Carlsson", "Female",
+                "830208XXXX", 35000);
+        expectedBeforeDelete.setEmploymentType(new EmploymentType("Undersköterska"));
+        repository.save(expectedBeforeDelete);
+
+        repository.deleteBySocialSecurityNr("830208XXXX");
+
+        Optional<Employee> actual = repository.findBySocialSecurityNr("830208XXXX");
+
+        assertTrue(actual.isEmpty());
+
+    }
+
+
+
 }

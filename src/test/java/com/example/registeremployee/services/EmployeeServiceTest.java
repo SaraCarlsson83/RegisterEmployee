@@ -11,19 +11,30 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyString;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
 
+
     EmployeeService service;
 
     @Mock
     EmployeeRepository mockRepository;
+
 
     @Mock
     EmploymentTypeRepository mockTypeRepository;
@@ -56,6 +67,22 @@ class EmployeeServiceTest {
         assertEquals(mockEmployee.getEmploymentType(), actual.get(0).getEmploymentType());
 
         verify(mockRepository).findAll();
+        }
+
+    @Test
+    void findEmployee() {
+        Employee expected = new Employee("Sara", "Carlsson", "Female",
+                "830208XXXX", 35000);
+        expected.setEmploymentType(new EmploymentType("Undersköterska"));
+
+        when(mockRepository.findEmployeeByFirstNameAndLastName(anyString(), anyString()))
+                .thenReturn(Collections.singletonList(expected));
+
+        List<Employee> actual = employeeService.findEmployee(anyString(), anyString());
+
+        assertEquals(actual.get(0), expected);
+        verify(mockRepository).findEmployeeByFirstNameAndLastName(anyString(), anyString());
+
 
     }
 }
