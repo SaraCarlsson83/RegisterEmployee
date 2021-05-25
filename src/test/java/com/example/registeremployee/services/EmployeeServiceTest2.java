@@ -12,7 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
-class EmployeeServiceTest {
+class EmployeeServiceTest2 {
 
     @Autowired
     EmployeeRepository repository;
