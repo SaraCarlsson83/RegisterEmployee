@@ -14,5 +14,5 @@ public interface EmployeeRepository extends MongoRepository<Employee, String> {
     Optional<Employee> findBySocialSecurityNr(String socialSecurityNr);
     List<Employee> findEmployeeByFirstNameAndLastName(String firstName, String lastName);
     void deleteBySocialSecurityNr(String socialSecurityNr);
- 
+
 }
