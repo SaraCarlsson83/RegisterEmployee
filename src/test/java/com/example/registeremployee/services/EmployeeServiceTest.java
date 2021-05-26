@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -56,6 +56,34 @@ class EmployeeServiceTest {
         assertEquals(mockEmployee.getEmploymentType(), actual.get(0).getEmploymentType());
 
         verify(mockRepository).findAll();
+
+    }
+
+    @Test
+    void addEmployee() {
+        Employee expected = new Employee();
+        expected.setFirstName("Ivona");
+        expected.setLastName("Zoricic");
+        expected.setGender("kvinna");
+        expected.setSocialSecurityNr("8307084445");
+        expected.setSalary(35000);
+
+        EmploymentType expectedType = new EmploymentType("Utvecklare");
+        expected.setEmploymentType(expectedType);
+
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+        when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
+
+        String actualAnswer = service.addEmployee(expected);
+        String expectedAnswer = "Ivona Zoricic är sparad.";
+
+        assertEquals(expectedAnswer, actualAnswer);
+
+        verify(mockRepository, times(1)).findBySocialSecurityNr(anyString());
+        verify(mockTypeRepository, times(2)).findByName(anyString());
+
+
+
 
     }
 }
