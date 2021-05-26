@@ -21,6 +21,6 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       DB_HOST: mongo
       DB_PORT: 27017
-      DB_NAME: db-prod-register-employee
+      DB_NAME: db-register-employee-prod
     depends_on:
       - mongo
