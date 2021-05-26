@@ -16,7 +16,7 @@ services:
   java-app:
     image: saralinnea83/register-employee
     ports:
-      - 8085:8085
+      - 8080:8080
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DB_HOST: mongo
