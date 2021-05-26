@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DataMongoTest
 class EmploymentTypeServiceTest {
+
     @Autowired
     EmploymentTypeRepository typeRepository;
     //EmploymentTypeService service;
