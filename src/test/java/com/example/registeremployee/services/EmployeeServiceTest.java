@@ -43,12 +43,10 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
 
-
     EmployeeService service;
 
     @Mock
     EmployeeRepository mockRepository;
-
 
     @Mock
     EmploymentTypeRepository mockTypeRepository;
@@ -89,19 +87,19 @@ class EmployeeServiceTest {
   
   @Test
   void updateEmployee(){
-    Employee expected = new Employee("Sara", "Carlsson", "Female",
-                "830208XXXX", 35000);
+        Employee expected = new Employee("Sara", "Carlsson", "Female",
+                    "830208XXXX", 35000);
         EmploymentType expectedType = new EmploymentType("Sjuksköterska");
         expected.setEmploymentType(expectedType);
-    
-    when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
         when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
     
      Employee actual = service.updateEmployee(expected);
 
         assertEquals(expected, actual);
-    
-     verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
+
+        verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
         verify(mockTypeRepository).findByName(anyString());
   }
 
