@@ -20,9 +20,6 @@ class EmployeeServiceTest2 {
     @Test
     void findEmployeeBySocialSecurityNr() {
 
-        String firstName, lastName, gender, socialSecurityNr;
-        double salary;
-        EmploymentType employmentType;
 
         Employee expected = new Employee();
         expected.setFirstName("Abel");

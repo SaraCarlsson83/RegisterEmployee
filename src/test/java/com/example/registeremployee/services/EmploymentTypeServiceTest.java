@@ -8,30 +8,27 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
+
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataMongoTest
+
 class EmploymentTypeServiceTest {
     @Autowired
     EmploymentTypeRepository typeRepository;
-
-    @Test
-    void addType() {
-        EmploymentType type = new EmploymentType("läkare");
-        typeRepository.save(type).toString();
-        EmploymentType actual= typeRepository.findAll().get(0);
-
-        assertEquals(actual,type);
-
-    }
+    EmploymentTypeService service;
 
 
-
-    @AfterEach
+    /*@AfterEach
      public  void init(){
        typeRepository.deleteByName("läkare");
+    }*/
+    @BeforeEach
+    void init(){
+        service = new EmploymentTypeService(typeRepository);
     }
     @Test
     void findAll() {
