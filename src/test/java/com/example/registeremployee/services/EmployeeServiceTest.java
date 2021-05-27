@@ -103,7 +103,6 @@ class EmployeeServiceTest {
         Employee mockEmployee = new Employee();
         mockEmployee.setFirstName("Ivona");
         mockEmployee.setLastName("Zoricic");
-        mockEmployee.setGender("kvinna");
         mockEmployee.setSocialSecurityNr("8307084445");
         mockEmployee.setSalary(35000);
 
