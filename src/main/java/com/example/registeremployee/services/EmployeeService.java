@@ -25,13 +25,16 @@ public class  EmployeeService {
 
     public String addEmployee(Employee employee) {
         Optional<EmploymentType> type = typeRepository.findByName(employee.getEmploymentType().getName());
+
         if (type.isEmpty()){
-            typeRepository.save(new EmploymentType(employee.getEmploymentType().getName()));
+            EmploymentType newType = new EmploymentType(employee.getEmploymentType().getName());
+            typeRepository.save(newType);
            employee.setEmploymentType(typeRepository.findByName(employee.getEmploymentType().getName()).orElseThrow());
         }
         else {
             employee.setEmploymentType(type.orElseThrow());
         }
+
 
         Optional<Employee> temp = repository.findBySocialSecurityNr(employee.getSocialSecurityNr());
         if(temp.isEmpty()){
@@ -68,7 +71,6 @@ public class  EmployeeService {
                 .ifPresent((user) -> {
                     user.setFirstName(employee.getFirstName())
                             .setLastName(employee.getLastName())
-                            .setGender(employee.getGender())
                             .setSalary(employee.getSalary())
                             .setEmploymentType(whichType(employee));
                     repository.save(user);

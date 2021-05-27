@@ -18,7 +18,7 @@ class EmployeeRepositoryTest {
 
     @Test
     void findEmployeeByFirstNameAndLastName() {
-        Employee expected = new Employee("Sara", "Carlsson", "Female",
+        Employee expected = new Employee("Sara", "Carlsson",
                 "830208XXXX", 35000);
         expected.setEmploymentType(new EmploymentType("Undersköterska"));
 
@@ -27,8 +27,6 @@ class EmployeeRepositoryTest {
         List<Employee> actual = employeeRepository.findEmployeeByFirstNameAndLastName("Sara", "Carlsson");
 
         assertEquals(actual.get(0), expected);
-
-        //Test
 
     }
 }

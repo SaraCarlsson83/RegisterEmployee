@@ -20,11 +20,9 @@ class EmployeeServiceTest2 {
     @Test
     void findEmployeeBySocialSecurityNr() {
 
-
         Employee expected = new Employee();
         expected.setFirstName("Abel");
         expected.setLastName("Shif");
-        expected.setGender("male");
         expected.setSocialSecurityNr("6777658888");
         expected.setSalary(26000.0);
         expected.setEmploymentType(new EmploymentType("Sjuksköterska"));
