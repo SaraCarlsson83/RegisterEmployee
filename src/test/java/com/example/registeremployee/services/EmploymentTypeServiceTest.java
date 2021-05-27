@@ -2,39 +2,52 @@ package com.example.registeremployee.services;
 
 import com.example.registeremployee.models.EmploymentType;
 import com.example.registeremployee.repositories.EmploymentTypeRepository;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
-@DataMongoTest
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class EmploymentTypeServiceTest {
-    @Autowired
-    EmploymentTypeRepository typeRepository;
 
-    @Disabled
+    EmploymentTypeService service;
+
+    @Mock
+    EmploymentTypeRepository mocktypeRepository;
+
+    @BeforeEach
+    public void init() {
+        service = new EmploymentTypeService(mocktypeRepository);
+    }
+
     @Test
     void addType() {
-        EmploymentType type = new EmploymentType("läkare");
-        typeRepository.save(type).toString();
-        EmploymentType actual= typeRepository.findAll().get(0);
+        EmploymentType mockType = new EmploymentType("Lärare");
 
-        assertEquals(actual,type);
+        when(mocktypeRepository.findByName(anyString())).thenReturn(Optional.empty());
+        when(mocktypeRepository.save(any())).thenReturn(mockType);
 
+        service.addType(mockType);
+
+        verify(mocktypeRepository, times(1)).findByName(anyString());
+        verify(mocktypeRepository).save(mockType);
     }
 
 
     @Test
     void deleteType() {
-        EmploymentType expected = new EmploymentType("Undersköterska");
-        typeRepository.save(expected);
+        EmploymentType type = new EmploymentType("Undersköterska");
 
-        EmploymentType actual =typeRepository.deleteByName("Undersköterska");
+        service.deleteType(type.getName());
 
-        assertEquals(actual,expected);
-
+        verify(mocktypeRepository, times(1)).deleteByName(type.getName());
 
     }
 }
