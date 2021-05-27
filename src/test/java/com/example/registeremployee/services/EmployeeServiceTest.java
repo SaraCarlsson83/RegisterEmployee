@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -71,14 +72,16 @@ class EmployeeServiceTest {
         EmploymentType mockType = new EmploymentType("Utvecklare");
         mockEmployee.setEmploymentType(mockType);
 
-        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(mockEmployee));
-        when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(mockType));
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(Optional.empty());
+        when(mockTypeRepository.save(any())).thenReturn(mockType);
+        when(mockRepository.save(any())).thenReturn(mockEmployee);
+        when(mockTypeRepository.findByName(anyString())).thenReturn(Optional.empty(), Optional.of(mockType));
 
         service.addEmployee(mockEmployee);
 
         verify(mockRepository, times(1)).findBySocialSecurityNr(anyString());
         verify(mockRepository).save(mockEmployee);
-        verify(mockTypeRepository, times(1)).findByName(anyString());
+        verify(mockTypeRepository, times(2)).findByName(anyString());
         verify(mockTypeRepository).save(mockType);
 
 
