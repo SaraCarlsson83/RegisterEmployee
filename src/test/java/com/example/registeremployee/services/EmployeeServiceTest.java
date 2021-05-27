@@ -61,23 +61,25 @@ class EmployeeServiceTest {
 
     @Test
     void addEmployee() {
-        Employee expected = new Employee();
-        expected.setFirstName("Ivona");
-        expected.setLastName("Zoricic");
-        expected.setGender("kvinna");
-        expected.setSocialSecurityNr("8307084445");
-        expected.setSalary(35000);
+        Employee mockEmployee = new Employee();
+        mockEmployee.setFirstName("Ivona");
+        mockEmployee.setLastName("Zoricic");
+        mockEmployee.setGender("kvinna");
+        mockEmployee.setSocialSecurityNr("8307084445");
+        mockEmployee.setSalary(35000);
 
-        EmploymentType expectedType = new EmploymentType("Utvecklare");
-        expected.setEmploymentType(expectedType);
+        EmploymentType mockType = new EmploymentType("Utvecklare");
+        mockEmployee.setEmploymentType(mockType);
 
-        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
-        when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(mockEmployee));
+        when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(mockType));
 
-        service.addEmployee(expected);
+        service.addEmployee(mockEmployee);
 
         verify(mockRepository, times(1)).findBySocialSecurityNr(anyString());
+        verify(mockRepository).save(mockEmployee);
         verify(mockTypeRepository, times(1)).findByName(anyString());
+        verify(mockTypeRepository).save(mockType);
 
 
     }
