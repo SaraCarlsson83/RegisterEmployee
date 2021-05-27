@@ -74,15 +74,10 @@ class EmployeeServiceTest {
         when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
         when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
 
-        String actualAnswer = service.addEmployee(expected);
-        String expectedAnswer = "Ivona Zoricic är sparad.";
-
-        assertEquals(expectedAnswer, actualAnswer);
+        service.addEmployee(expected);
 
         verify(mockRepository, times(1)).findBySocialSecurityNr(anyString());
-        verify(mockTypeRepository, times(2)).findByName(anyString());
-
-
+        verify(mockTypeRepository, times(1)).findByName(anyString());
 
 
     }
