@@ -11,11 +11,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Collections;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 
 
 
@@ -92,8 +97,33 @@ class EmployeeServiceTest {
         verify(mockRepository, times(1)).deleteBySocialSecurityNr(employee.getSocialSecurityNr());
     }
 
-       
 
+    @Test
+    void addEmployee() {
+        Employee mockEmployee = new Employee();
+        mockEmployee.setFirstName("Ivona");
+        mockEmployee.setLastName("Zoricic");
+        mockEmployee.setSocialSecurityNr("8307084445");
+        mockEmployee.setSalary(35000);
+
+        EmploymentType mockType = new EmploymentType("Utvecklare");
+        mockEmployee.setEmploymentType(mockType);
+
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(Optional.empty());
+        when(mockTypeRepository.save(any())).thenReturn(mockType);
+        when(mockRepository.save(any())).thenReturn(mockEmployee);
+        when(mockTypeRepository.findByName(anyString())).thenReturn(Optional.empty(), Optional.of(mockType));
+
+        service.addEmployee(mockEmployee);
+
+        verify(mockRepository, times(1)).findBySocialSecurityNr(anyString());
+        verify(mockRepository).save(mockEmployee);
+        verify(mockTypeRepository, times(2)).findByName(anyString());
+        verify(mockTypeRepository).save(mockType);
+
+    }
+
+     
     @Test
     void findEmployee() {
 
@@ -113,4 +143,5 @@ class EmployeeServiceTest {
 
   }
 }
+
 
