@@ -4,6 +4,7 @@ import com.example.registeremployee.models.Employee;
 import com.example.registeremployee.models.EmploymentType;
 import com.example.registeremployee.repositories.EmployeeRepository;
 import com.example.registeremployee.repositories.EmploymentTypeRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class EmployeeService {
+public class  EmployeeService {
 
     private final EmployeeRepository repository;
     private final EmploymentTypeRepository typeRepository;
@@ -65,15 +66,15 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee (Employee employee) {
+        System.out.println("i service");
         repository.findBySocialSecurityNr(employee.getSocialSecurityNr())
-                .ifPresent(user -> {
+                .ifPresent((user) -> {
                     user.setFirstName(employee.getFirstName())
                             .setLastName(employee.getLastName())
-                            .setGender(employee.getGender())
                             .setSalary(employee.getSalary())
                             .setEmploymentType(whichType(employee));
                     repository.save(user);
-                } );
+                });
         return repository.findBySocialSecurityNr(employee.getSocialSecurityNr())
                 .orElseThrow();
     }
@@ -83,13 +84,9 @@ public class EmployeeService {
         if (type.isEmpty()){
             typeRepository.save(new EmploymentType(employee.getEmploymentType().getName()));
             return typeRepository.findByName(employee.getEmploymentType().getName()).orElseThrow();
-
         }
         else {
             return type.orElseThrow();
         }
            }
-
-
-
 }

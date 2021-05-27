@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
-import java.util.Optional;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,30 +14,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployeeRepositoryTest {
 
     @Autowired
-    EmployeeRepository repository;
+    EmployeeRepository employeeRepository;
 
     @Test
-    void findBySocialSecurityNr() {
-        String firstName = "Ivona";
-        String lastName = "Zoricic";
-        String gender = "Kvinna";
-        String sSNr = "8307084445";
-        double salary = 35000;
-        EmploymentType type = new EmploymentType("Läkare");
+    void findEmployeeByFirstNameAndLastName() {
+        Employee expected = new Employee("Sara", "Carlsson",
+                "830208XXXX", 35000);
+        expected.setEmploymentType(new EmploymentType("Undersköterska"));
 
-        Employee expected = new Employee();
-        expected.setFirstName(firstName);
-        expected.setLastName(lastName);
-        expected.setGender(gender);
-        expected.setSocialSecurityNr(sSNr);
-        expected.setSalary(salary);
-        expected.setEmploymentType(type);
+        employeeRepository.save(expected);
 
-        repository.save(expected);
+        List<Employee> actual = employeeRepository.findEmployeeByFirstNameAndLastName("Sara", "Carlsson");
 
-        Optional<Employee> actual = repository.findBySocialSecurityNr("8307084445");
-
-        assertEquals(expected, actual.orElseThrow());
+        assertEquals(actual.get(0), expected);
 
     }
 }
