@@ -3,7 +3,6 @@ package com.example.registeremployee.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 
 
@@ -11,6 +10,8 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmploymentType {
+
+
 
     private String id;
 

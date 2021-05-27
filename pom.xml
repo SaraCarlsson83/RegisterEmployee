@@ -45,7 +45,7 @@
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
             <artifactId>de.flapdoodle.embed.mongo</artifactId>
-<!--            <scope>test</scope>-->
+             <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -54,14 +54,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--<configuration>
+                <configuration>
                     <excludes>
-                        &lt;!&ndash;<exclude>
+                        <exclude>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                        </exclude>&ndash;&gt;
+                        </exclude>
                     </excludes>
-                </configuration>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

@@ -10,38 +10,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 
-import java.util.List;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Created by Sileshi Haile Woldemariame
- * Date: 2021-05-20
- * Time:
- * Project:RegisterEmployee
- * Copyright: MIT
- */
 @DataMongoTest
 class EmploymentTypeServiceTest {
     @Autowired
     EmploymentTypeRepository typeRepository;
-    //EmploymentTypeService service;
 
-    /*@Test
-    void deleteType() {
-        EmploymentType expected = new EmploymentType("Undersköterska");
-        //expected.setName("Undersköterska");
-        typeRepository.save(expected);
+    @Test
+    void addType() {
+        EmploymentType type = new EmploymentType("läkare");
+        typeRepository.save(type).toString();
+        EmploymentType actual= typeRepository.findAll().get(0);
 
-        //EmploymentType actual =typeRepository.deleteByName("Undersköterska");
-        assertEquals(actual,expected);*//*
+        assertEquals(actual,type);
 
-        //Optional<EmploymentType> actual = typeRepository.deleteByName("");
+    }
 
-        assertTrue(actual.isEmpty());
 
-    }*/
 
     @AfterEach
      public  void init(){
@@ -75,5 +61,9 @@ class EmploymentTypeServiceTest {
     }
 }
 
+
+
+
+    
 
 
