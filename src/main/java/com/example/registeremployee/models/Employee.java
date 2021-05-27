@@ -33,6 +33,5 @@ public class Employee {
         this.gender = gender;
         this.socialSecurityNr = socialSecurityNr;
         this.salary = salary;
-        this.employmentType = employmentType;
     }
 }
