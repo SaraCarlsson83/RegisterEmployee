@@ -1,6 +1,5 @@
 package com.example.registeremployee.controllers;
 
-import com.example.registeremployee.models.Employee;
 import com.example.registeremployee.models.EmploymentType;
 import com.example.registeremployee.services.EmploymentTypeService;
 import lombok.RequiredArgsConstructor;

@@ -7,13 +7,11 @@ import com.example.registeremployee.repositories.EmploymentTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
+
 import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
@@ -23,22 +21,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceTest {
@@ -52,9 +39,6 @@ class EmployeeServiceTest {
 
     @Mock
     EmploymentTypeRepository mockTypeRepository;
-
-    @InjectMocks
-    EmployeeService mockservice;
 
     @BeforeEach
     public void init() {
@@ -89,19 +73,23 @@ class EmployeeServiceTest {
   
   @Test
   void updateEmployee(){
-    Employee expected = new Employee("Sara", "Carlsson", "Female",
-                "830208XXXX", 35000);
+
+        Employee expected = new Employee("Sara", "Carlsson", "Female",
+                    "830208XXXX", 35000);
         EmploymentType expectedType = new EmploymentType("Sjuksköterska");
         expected.setEmploymentType(expectedType);
-    
-    when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+
+        when(mockRepository.findBySocialSecurityNr(anyString())).thenReturn(java.util.Optional.of(expected));
+
         when(mockTypeRepository.findByName(anyString())).thenReturn(java.util.Optional.of(expectedType));
     
      Employee actual = service.updateEmployee(expected);
 
         assertEquals(expected, actual);
-    
-     verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
+
+
+        verify(mockRepository, times(2)).findBySocialSecurityNr(anyString());
+
         verify(mockTypeRepository).findByName(anyString());
   }
 

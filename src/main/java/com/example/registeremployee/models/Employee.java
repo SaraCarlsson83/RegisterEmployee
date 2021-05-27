@@ -6,16 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 public class Employee {
 
-
-    private String id;
+        private String id;
 
     private String firstName;
     private String lastName;
@@ -28,8 +25,5 @@ public class Employee {
 
 
     private EmploymentType employmentType;
-
-    public Employee(String sara, String carlsson, String female, String s, int i) {
-    }
     //private String department;
 }
