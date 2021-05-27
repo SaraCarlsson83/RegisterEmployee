@@ -68,7 +68,6 @@ public class  EmployeeService {
                 .ifPresent((user) -> {
                     user.setFirstName(employee.getFirstName())
                             .setLastName(employee.getLastName())
-                            .setGender(employee.getGender())
                             .setSalary(employee.getSalary())
                             .setEmploymentType(whichType(employee));
                     repository.save(user);

@@ -2,6 +2,7 @@ package com.example.registeremployee.services;
 
 import com.example.registeremployee.models.EmploymentType;
 import com.example.registeremployee.repositories.EmploymentTypeRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -13,6 +14,7 @@ class EmploymentTypeServiceTest {
     @Autowired
     EmploymentTypeRepository typeRepository;
 
+    @Disabled
     @Test
     void addType() {
         EmploymentType type = new EmploymentType("läkare");
