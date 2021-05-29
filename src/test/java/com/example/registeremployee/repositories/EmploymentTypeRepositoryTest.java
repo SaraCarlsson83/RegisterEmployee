@@ -17,7 +17,7 @@ class EmploymentTypeRepositoryTest {
 
     @Test
     void deleteByName() {
-        String name = "Läkare";
+
         EmploymentType expected = new EmploymentType("Läkare");
 
         repository.save(expected);
@@ -32,7 +32,7 @@ class EmploymentTypeRepositoryTest {
 
     @Test
     void findByName() {
-        String name = "Sjuksköterska";
+
         EmploymentType expected  = new EmploymentType("Sjuksköterska");
         repository.save(expected);
 
